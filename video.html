@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>詹姆斯视频播放器</title>
+    <link href="https://vjs.zencdn.net/8.6.3/video-js.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+        }
+
+        .video-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="video-container">
+        <video id="lebron-video" class="video-js vjs-big-play-centered" controls preload="auto" width="100%"
+            height="auto">
+            <!-- 替换为稳定可播放的长视频地址（约10分钟） -->
+            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"
+                type="video/mp4">
+        </video>
+    </div>
+
+    <script src="https://vjs.zencdn.net/8.6.3/video.min.js"></script>
+    <script>
+        const player = videojs('lebron-video', {
+            autoplay: false,
+            controls: true,
+            playbackRates: [0.5, 1, 1.25, 1.5, 2],
+            responsive: true,
+            fluid: true
+        });
+
+        // 安卓调用：切换控制栏
+        function toggleControlBar() {
+            if (player.controlBar.isVisible()) {
+                player.controlBar.hide();
+                player.userActive(false);
+            } else {
+                player.controlBar.show();
+                player.userActive(true);
+            }
+        }
+
+        // 网页点击也能触发
+        player.on('click', function () {
+            toggleControlBar();
+        });
+    </script>
+</body>
+
+</html>
